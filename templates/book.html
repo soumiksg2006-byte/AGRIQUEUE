@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="formbox">
+<h2>Book Procurement Slot</h2>
+<p>Maximum 50 farmers are accepted per day in this prototype.</p>
+<form method="post">
+<label>Crop</label>
+<select name="crop" required>
+<option value="">Select crop</option><option>Paddy</option><option>Wheat</option><option>Maize</option><option>Other</option>
+</select>
+<label>Expected Quantity (quintals)</label><input type="number" name="quantity" min="0.1" step="0.1" required>
+<label>Date</label><input type="date" name="booking_date" min="{{ today }}" required>
+<label>Time Slot</label>
+<select name="slot" required>
+<option>08:00 AM - 09:00 AM</option>
+<option>09:00 AM - 10:00 AM</option>
+<option>10:00 AM - 11:00 AM</option>
+<option>11:00 AM - 12:00 PM</option>
+<option>12:00 PM - 01:00 PM</option>
+<option>02:00 PM - 03:00 PM</option>
+<option>03:00 PM - 04:00 PM</option>
+<option>04:00 PM - 05:00 PM</option>
+</select>
+<button class="btn">Confirm Booking</button>
+</form>
+</div>
+{% endblock %}

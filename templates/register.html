@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="formbox">
+<h2>Farmer Registration</h2>
+<form method="post">
+<label>Name *</label><input name="name" required>
+<label>Mobile Number *</label><input name="phone" pattern="[0-9]{10}" maxlength="10" required>
+<label>Village</label><input name="village">
+<label>Password *</label><input type="password" name="password" minlength="4" required>
+<button class="btn" type="submit">Register</button>
+</form>
+</div>
+{% endblock %}

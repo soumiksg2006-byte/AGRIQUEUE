@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Farmer Dashboard</h2>
+<div class="info">
+<p><b>Farmer ID:</b> {{ farmer.farmer_id }}</p>
+<p><b>Name:</b> {{ farmer.name }}</p>
+<p><b>Mobile:</b> {{ farmer.phone }}</p>
+</div>
+<a class="btn" href="{{ url_for('book') }}">Book New Slot</a>
+<h3>My Bookings</h3>
+<table>
+<tr><th>Token</th><th>Date</th><th>Slot</th><th>Crop</th><th>Qty</th><th>Status</th><th>Payment</th></tr>
+{% for b in bookings %}
+<tr>
+<td><a href="{{ url_for('ticket', booking_id=b.booking_id) }}">{{ b.booking_id }}</a></td>
+<td>{{ b.booking_date }}</td><td>{{ b.slot }}</td><td>{{ b.crop }}</td>
+<td>{{ b.quantity }}</td><td>{{ b.status }}</td><td>{{ b.payment_status }}</td>
+</tr>
+{% else %}
+<tr><td colspan="7">No bookings yet.</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

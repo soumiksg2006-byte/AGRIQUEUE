@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+<h1>Smart Agricultural Procurement</h1>
+<p>Register farmers, book procurement slots, manage queues and track payments.</p>
+<div class="buttons">
+<a class="btn" href="{{ url_for('register') }}">Farmer Registration</a>
+<a class="btn secondary" href="{{ url_for('login') }}">Farmer Login</a>
+<a class="btn dark" href="{{ url_for('admin_login') }}">Admin Panel</a>
+</div>
+</section>
+<section class="cards">
+<div><b>📅 Slot Booking</b><p>Distribute farmers across available dates and time slots.</p></div>
+<div><b>🔢 Queue Management</b><p>Track Booked, Arrived, Weighing and Completed farmers.</p></div>
+<div><b>💰 Payment Tracking</b><p>Store actual quantity, rate and payment status.</p></div>
+</section>
+{% endblock %}

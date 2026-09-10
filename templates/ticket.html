@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="ticket">
+<h2>🌾 Procurement Token</h2>
+<h1>{{ b.booking_id }}</h1>
+<div id="qrcode"></div>
+<p><b>Farmer:</b> {{ b.name }}</p>
+<p><b>Farmer ID:</b> {{ b.farmer_id }}</p>
+<p><b>Mobile:</b> {{ b.phone }}</p>
+<p><b>Village:</b> {{ b.village }}</p>
+<p><b>Crop:</b> {{ b.crop }}</p>
+<p><b>Expected quantity:</b> {{ b.quantity }} quintals</p>
+<p><b>Date:</b> {{ b.booking_date }}</p>
+<p><b>Slot:</b> {{ b.slot }}</p>
+<p><b>Status:</b> <span class="badge">{{ b.status }}</span></p>
+<p>Show this token/QR at the procurement centre.</p>
+<a class="btn" href="{{ url_for('farmer_dashboard') }}">Go to Dashboard</a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+new QRCode(document.getElementById("qrcode"), {
+  text: "{{ b.booking_id }}",
+  width: 180, height: 180
+});
+</script>
+{% endblock %}

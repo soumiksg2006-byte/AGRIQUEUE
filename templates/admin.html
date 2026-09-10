@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="adminhead"><h2>Admin Procurement Dashboard</h2><a class="btn" href="{{ url_for('admin_logout') }}">Logout</a></div>
+<p>Scan/search the farmer's token and update the procurement status.</p>
+<table>
+<tr><th>Token</th><th>Farmer</th><th>Phone</th><th>Crop</th><th>Qty</th><th>Date</th><th>Slot</th><th>Status</th><th>Actual Qty</th><th>Rate</th><th>Payment</th><th>Save</th></tr>
+{% for b in bookings %}
+<tr>
+<form method="post" action="{{ url_for('update_booking', booking_id=b.booking_id) }}">
+<td>{{ b.booking_id }}</td><td>{{ b.name }}</td><td>{{ b.phone }}</td><td>{{ b.crop }}</td>
+<td>{{ b.quantity }}</td><td>{{ b.booking_date }}</td><td>{{ b.slot }}</td>
+<td><select name="status">
+{% for s in ['Booked','Arrived','Waiting','Weighing','Procurement','Completed'] %}
+<option {% if b.status==s %}selected{% endif %}>{{ s }}</option>
+{% endfor %}
+</select></td>
+<td><input class="small" type="number" step="0.01" name="actual_quantity" value="{{ b.actual_quantity or '' }}"></td>
+<td><input class="small" type="number" step="0.01" name="rate" value="{{ b.rate or '' }}"></td>
+<td><select name="payment_status"><option {% if b.payment_status=='Pending' %}selected{% endif %}>Pending</option><option {% if b.payment_status=='Processing' %}selected{% endif %}>Processing</option><option {% if b.payment_status=='Paid' %}selected{% endif %}>Paid</option></select></td>
+<td><button>Save</button></td>
+</form>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

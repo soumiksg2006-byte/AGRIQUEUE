@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AgriQueue</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+
+    <div>
+
+        <a href="{{ url_for('index') }}">{{ t.home }}</a>
+
+        {% if session.get('farmer_id') %}
+
+            <a href="{{ url_for('farmer_dashboard') }}">{{ t.dashboard }}</a>
+
+            <a href="{{ url_for('book') }}">{{ t.book_slot }}</a>
+
+            <a href="{{ url_for('logout') }}">{{ t.logout }}</a>
+
+        {% else %}
+
+            <a href="{{ url_for('login') }}">{{ t.login }}</a>
+
+            <a href="{{ url_for('weather') }}">{{ t.weather }}</a>
+
+            <a href="{{ url_for('register') }}">{{ t.register }}</a>
+
+        {% endif %}
+
+        <a href="{{ url_for('admin_login') }}">Admin</a>
+
+        <form action="{{ url_for('set_language') }}" method="POST">
+
+            <select name="language" onchange="this.form.submit()">
+
+                <option value="en" {% if current_language == "en" %}selected{% endif %}>
+                    English
+                </option>
+
+                <option value="hi" {% if current_language == "hi" %}selected{% endif %}>
+                    हिंदी
+                </option>
+
+                <option value="bn" {% if current_language == "bn" %}selected{% endif %}>
+                    বাংলা
+                </option>
+
+            </select>
+
+        </form>
+
+    </div>
+
+</nav>
+
+<main>
+{% with messages=get_flashed_messages() %}
+{% if messages %}
+  {% for message in messages %}<div class="alert">{{ message }}</div>{% endfor %}
+{% endif %}
+{% endwith %}
+{% block content %}{% endblock %}
+</main>
+<footer>AgriQueue by AGROVISION </footer>
+</body>
+</html>
