@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="formbox">
-<h2>Farmer Registration</h2>
+<h2>{{ t.farmer_registration }}</h2>
 <form method="post">
-<label>Name *</label><input name="name" required>
-<label>Mobile Number *</label><input name="phone" pattern="[0-9]{10}" maxlength="10" required>
-<label>Village</label><input name="village">
-<label>Password *</label><input type="password" name="password" minlength="4" required>
-<button class="btn" type="submit">Register</button>
+<label>{{ t.name }} *</label><input name="name" required>
+<label>{{ t.mobile_number }} *</label><input name="phone" pattern="[0-9]{10}" maxlength="10" required>
+<label>{{ t.village }}</label><input name="village">
+<label>{{ t.password }} *</label><input type="password" name="password" minlength="4" required>
+<button class="btn" type="submit">{{ t.register }}</button>
 </form>
 </div>
 {% endblock %}

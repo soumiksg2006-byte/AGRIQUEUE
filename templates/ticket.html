@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="ticket">
-<h2>🌾 Procurement Token</h2>
+<h2>🌾 {{ t.procurement_token }}</h2>
 <h1>{{ b.booking_id }}</h1>
 <div id="qrcode"></div>
-<p><b>Farmer:</b> {{ b.name }}</p>
-<p><b>Farmer ID:</b> {{ b.farmer_id }}</p>
-<p><b>Mobile:</b> {{ b.phone }}</p>
-<p><b>Village:</b> {{ b.village }}</p>
-<p><b>Crop:</b> {{ b.crop }}</p>
-<p><b>Expected quantity:</b> {{ b.quantity }} quintals</p>
-<p><b>Date:</b> {{ b.booking_date }}</p>
-<p><b>Slot:</b> {{ b.slot }}</p>
-<p><b>Status:</b> <span class="badge">{{ b.status }}</span></p>
-<p>Show this token/QR at the procurement centre.</p>
-<a class="btn" href="{{ url_for('farmer_dashboard') }}">Go to Dashboard</a>
+<p><b>{{ t.farmer_label }}</b> {{ b.name }}</p>
+<p><b>{{ t.farmer_id_label }}</b> {{ b.farmer_id }}</p>
+<p><b>{{ t.mobile_label }}</b> {{ b.phone }}</p>
+<p><b>{{ t.village_label }}</b> {{ b.village }}</p>
+<p><b>{{ t.crop_label }}</b> {{ b.crop }}</p>
+<p><b>{{ t.expected_quantity_label }}</b> {{ b.quantity }} {{ t.quintals }}</p>
+<p><b>{{ t.date_label }}</b> {{ b.booking_date }}</p>
+<p><b>{{ t.slot_label }}</b> {{ b.slot }}</p>
+<p><b>{{ t.status_label }}</b> <span class="badge">{{ b.status }}</span></p>
+<p>{{ t.show_token_msg }}</p>
+<a class="btn" href="{{ url_for('farmer_dashboard') }}">{{ t.go_to_dashboard }}</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
 new QRCode(document.getElementById("qrcode"), {
-  text: "{{ b.booking_id }}",
+  text: "{{ verify_url|safe }}",
   width: 180, height: 180
 });
 </script>
