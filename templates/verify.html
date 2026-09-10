@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="verify-box">
+
+{% if verified %}
+    {# ── SUCCESS STATE ── #}
+    <h2>{{ t.verification_success }}</h2>
+    <div class="verify-success">
+        <p><b>{{ t.farmer_label }}</b> {{ b.name }}</p>
+        <p><b>{{ t.token }}:</b> {{ b.booking_id }}</p>
+        <p><b>{{ t.crop_label }}</b> {{ b.crop }} — {{ b.quantity }} {{ t.quintals }}</p>
+        <p><b>{{ t.date_label }}</b> {{ b.booking_date }}</p>
+        <p><b>{{ t.slot_label }}</b> {{ b.slot }}</p>
+        <p class="sms-confirm">📩 {{ t.sms_sent_to }} <b>{{ b.phone }}</b></p>
+        {% if maps_link %}
+        <a class="btn" href="{{ maps_link }}" target="_blank">{{ t.view_on_map }}</a>
+        {% endif %}
+        <a class="btn dark" href="{{ url_for('admin_dashboard') }}">{{ t.back_to_admin }}</a>
+    </div>
+
+{% elif already %}
+    {# ── ALREADY VERIFIED ── #}
+    <h2>⚠️ {{ t.already_arrived }}</h2>
+    <div class="verify-info">
+        <p><b>{{ t.farmer_label }}</b> {{ b.name }}</p>
+        <p><b>{{ t.token }}:</b> {{ b.booking_id }}</p>
+        <p><b>{{ t.status_label }}</b> <span class="badge">{{ b.status }}</span></p>
+    </div>
+    <a class="btn dark" href="{{ url_for('admin_dashboard') }}">{{ t.back_to_admin }}</a>
+
+{% else %}
+    {# ── VERIFICATION FORM ── #}
+    <h2>{{ t.verify_title }}</h2>
+    <h3>{{ t.booking_details }}</h3>
+    <div class="verify-info">
+        <p><b>{{ t.farmer_label }}</b> {{ b.name }}</p>
+        <p><b>{{ t.farmer_id_label }}</b> {{ b.farmer_id }}</p>
+        <p><b>{{ t.mobile_label }}</b> {{ b.phone }}</p>
+        <p><b>{{ t.village_label }}</b> {{ b.village }}</p>
+        <p><b>{{ t.crop_label }}</b> {{ b.crop }}</p>
+        <p><b>{{ t.expected_quantity_label }}</b> {{ b.quantity }} {{ t.quintals }}</p>
+        <p><b>{{ t.date_label }}</b> {{ b.booking_date }}</p>
+        <p><b>{{ t.slot_label }}</b> {{ b.slot }}</p>
+    </div>
+
+    <div id="location-status" class="location-fetching">
+        {{ t.fetching_location }}
+    </div>
+
+    <form method="post" id="verify-form">
+        <input type="hidden" name="latitude" id="lat" value="">
+        <input type="hidden" name="longitude" id="lng" value="">
+        <button class="btn verify-btn" type="submit" id="verify-btn" disabled>
+            {{ t.confirm_arrival_btn }}
+        </button>
+    </form>
+{% endif %}
+
+</div>
+
+<script>
+(function() {
+    var locStatus = document.getElementById("location-status");
+    var latInput = document.getElementById("lat");
+    var lngInput = document.getElementById("lng");
+    var btn = document.getElementById("verify-btn");
+
+    if (!locStatus) return; // already verified page
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(pos) {
+                latInput.value = pos.coords.latitude.toFixed(6);
+                lngInput.value = pos.coords.longitude.toFixed(6);
+                locStatus.textContent = "{{ t.location_captured }}";
+                locStatus.className = "location-ok";
+                btn.disabled = false;
+            },
+            function(err) {
+                locStatus.textContent = "{{ t.location_unavailable }}";
+                locStatus.className = "location-warn";
+                btn.disabled = false; // allow verification without location
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    } else {
+        locStatus.textContent = "{{ t.location_unavailable }}";
+        locStatus.className = "location-warn";
+        btn.disabled = false;
+    }
+})();
+</script>
+{% endblock %}
